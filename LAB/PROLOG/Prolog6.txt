@@ -1,0 +1,21 @@
+% Fruit and Color Program
+
+fruit(apple, red).
+fruit(banana, yellow).
+fruit(mango, yellow).
+fruit(grape, green).
+fruit(orange, orange).
+fruit(watermelon, green).
+fruit(strawberry, red).
+fruit(guava, green).
+
+% Query the database
+show_fruit :-
+    fruit(Fruit, Color),
+    write('Fruit: '),
+    write(Fruit),
+    write('  Color: '),
+    writeln(Color),
+    fail.
+
+show_fruit.

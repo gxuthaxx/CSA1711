@@ -1,0 +1,48 @@
+% Best First Search
+
+% edge(Node, NextNode, HeuristicValue)
+
+edge(a, b, 4).
+edge(a, c, 2).
+edge(b, d, 5).
+edge(c, d, 1).
+edge(d, e, 3).
+
+% Best First Search
+best_first(Start, Goal, Path) :-
+    search([Start], Goal, [], Path).
+
+% Goal reached
+search([Goal|_], Goal, _, [Goal]).
+
+% Continue searching
+search([Node|Rest], Goal, Visited, [Node|Path]) :-
+
+    findall(
+        H-Next,
+        (
+            edge(Node, Next, H),
+            \+ member(Next, Visited),
+            \+ member(Next, [Node|Rest])
+        ),
+        Children
+    ),
+
+    keysort(Children, SortedChildren),
+
+    extract_nodes(SortedChildren, Nodes),
+
+    append(Nodes, Rest, NewQueue),
+
+    search(
+        NewQueue,
+        Goal,
+        [Node|Visited],
+        Path
+    ).
+
+% Extract nodes from H-Node pairs
+extract_nodes([], []).
+
+extract_nodes([_-Node|Rest], [Node|Nodes]) :-
+    extract_nodes(Rest, Nodes).

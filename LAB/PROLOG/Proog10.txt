@@ -1,0 +1,18 @@
+% Backward Chaining
+
+% Facts
+fact(sunny).
+
+% Rules
+rule(sunny, warm).
+rule(warm, go_out).
+rule(go_out, play).
+
+% Base case
+prove(Goal) :-
+    fact(Goal).
+
+% Recursive rule
+prove(Goal) :-
+    rule(Condition, Goal),
+    prove(Condition).

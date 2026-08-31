@@ -1,0 +1,30 @@
+% Diet Recommendation System
+
+% Diseases
+disease(diabetes).
+disease(hypertension).
+disease(anemia).
+disease(obesity).
+
+% Diet recommendations
+diet(diabetes,
+     'Low sugar and high fiber food').
+
+diet(hypertension,
+     'Low salt, fruits and vegetables').
+
+diet(anemia,
+     'Iron rich foods and green leafy vegetables').
+
+diet(obesity,
+     'Low calorie food and regular exercise').
+
+% Recommendation rule
+suggest_diet(Disease, Diet) :-
+    disease(Disease),
+    diet(Disease, Diet),
+    write('Disease: '),
+    write(Disease),
+    nl,
+    write('Recommended Diet: '),
+    writeln(Diet).

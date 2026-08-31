@@ -1,0 +1,30 @@
+% Medical Diagnosis System
+
+% Symptoms and diseases
+
+symptom(fever, flu).
+symptom(cough, flu).
+symptom(body_pain, flu).
+
+symptom(fever, cold).
+symptom(cough, cold).
+symptom(runny_nose, cold).
+
+symptom(chest_pain, heart_disease).
+symptom(breathlessness, heart_disease).
+
+symptom(thirst, diabetes).
+symptom(frequent_urination, diabetes).
+
+% Diagnosis rule
+diagnose(Disease, Symptom) :-
+    symptom(Symptom, Disease).
+
+% Display diagnosis
+medical_diagnosis(Symptom) :-
+    symptom(Symptom, Disease),
+    write('Possible Disease: '),
+    writeln(Disease),
+    fail.
+
+medical_diagnosis(_).

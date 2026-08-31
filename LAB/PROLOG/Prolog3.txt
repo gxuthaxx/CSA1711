@@ -1,0 +1,55 @@
+% Family Tree Program
+
+% Parents
+parent(john, mary).
+parent(john, peter).
+
+parent(susan, mary).
+parent(susan, peter).
+
+parent(peter, alice).
+parent(anna, alice).
+
+parent(peter, bob).
+parent(anna, bob).
+
+% Gender
+male(john).
+male(peter).
+male(bob).
+
+female(susan).
+female(anna).
+female(mary).
+female(alice).
+
+% Father
+father(X, Y) :-
+    parent(X, Y),
+    male(X).
+
+% Mother
+mother(X, Y) :-
+    parent(X, Y),
+    female(X).
+
+% Grandparent
+grandparent(X, Y) :-
+    parent(X, Z),
+    parent(Z, Y).
+
+% Grandfather
+grandfather(X, Y) :-
+    grandparent(X, Y),
+    male(X).
+
+% Grandmother
+grandmother(X, Y) :-
+    grandparent(X, Y),
+    female(X).
+
+% Sibling
+sibling(X, Y) :-
+    parent(P, X),
+    parent(P, Y),
+    X \= Y.

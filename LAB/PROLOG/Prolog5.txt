@@ -1,0 +1,45 @@
+% Monkey Banana Problem
+
+% Initial state:
+% state(MonkeyPosition, MonkeyStatus, BoxPosition, BananaStatus)
+
+% Monkey walks from one position to another
+move(
+    state(P1, onfloor, B, hasnot),
+    state(P2, onfloor, B, hasnot),
+    'Monkey walks from P1 to P2'
+) :-
+    P1 \= P2.
+
+% Monkey pushes the box
+move(
+    state(P, onfloor, P, hasnot),
+    state(middle, onfloor, middle, hasnot),
+    'Monkey pushes the box to the middle'
+) :-
+    P \= middle.
+
+% Monkey climbs onto the box
+move(
+    state(middle, onfloor, middle, hasnot),
+    state(middle, onbox, middle, hasnot),
+    'Monkey climbs onto the box'
+).
+
+% Monkey gets the banana
+move(
+    state(middle, onbox, middle, hasnot),
+    state(middle, onbox, middle, has),
+    'Monkey gets the banana'
+).
+
+% Goal state
+goal(state(_, _, _, has)).
+
+% Solve the problem
+solve(State, []) :-
+    goal(State).
+
+solve(State, [Action|Actions]) :-
+    move(State, NextState, Action),
+    solve(NextState, Actions).

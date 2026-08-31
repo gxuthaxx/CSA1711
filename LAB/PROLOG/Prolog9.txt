@@ -1,0 +1,25 @@
+% Forward Chaining
+
+% Initial facts
+fact(sunny).
+
+% Rules
+rule(sunny, warm).
+rule(warm, go_out).
+rule(go_out, play).
+
+% Check whether goal is already known
+forward_chain(Facts, Goal) :-
+    member(Goal, Facts),
+    !.
+
+% Apply a rule to derive a new fact
+forward_chain(Facts, Goal) :-
+    rule(Condition, NewFact),
+    member(Condition, Facts),
+    \+ member(NewFact, Facts),
+
+    forward_chain(
+        [NewFact|Facts],
+        Goal
+    ).
