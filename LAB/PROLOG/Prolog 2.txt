@@ -1,0 +1,43 @@
+% ---- Database of facts ----
+% person(Name, dob(Day, Month, Year)).
+
+person('Alice Smith', dob(15, 6, 1990)).
+person('Bob Johnson', dob(22, 11, 1985)).
+person('Carol Lee', dob(3, 3, 2000)).
+person('David Kim', dob(30, 1, 1978)).
+
+% ---- Get today's date from system clock ----
+today(dob(D, M, Y)) :-
+    get_time(TimeStamp),
+    stamp_date_time(TimeStamp, DateTime, local),
+    date_time_value(day, DateTime, D),
+    date_time_value(month, DateTime, M),
+    date_time_value(year, DateTime, Y).
+
+% ---- Calculate age given a person's name ----
+age(Name, Age) :-
+    person(Name, dob(BD, BM, BY)),
+    today(dob(TD, TM, TY)),
+    ( (TM, TD) @< (BM, BD)
+    ->  Age is TY - BY - 1
+    ;   Age is TY - BY
+    ).
+
+% ---- Print one person's record ----
+print_person(Name) :-
+    person(Name, dob(D, M, Y)),
+    age(Name, Age),
+    format("Name: ~w~t~30|DOB: ~w/~w/~w~t~55|Age: ~w~n", [Name, D, M, Y, Age]).
+
+% ---- Print all records ----
+print_all :-
+    format("~n=== Person Database ===~n"),
+    forall(person(Name, _), print_person(Name)),
+    nl.
+
+% ---- Entry point ----
+:- initialization(main).
+
+main :-
+    print_all,
+    halt.
